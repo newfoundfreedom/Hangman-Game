@@ -167,6 +167,3 @@ var hangmanGame = {  // OVERALL GAME OBJECT
 
 hangmanGame.reset();
 hangmanGame.play();
-
-
-
