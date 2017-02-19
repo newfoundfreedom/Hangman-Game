@@ -1,45 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Bootstrap 101 Template</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>SW Hangman</title>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <!-- Optional Bootstrap theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Style Overrides CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
 
-        <!-- Latest compiled and minified Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-            crossorigin="anonymous">
-            <!-- Optional Bootstrap theme -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-                integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
 
-    </head>
+<body>
 
-    <body>
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1>Star Wars Hangman</h1>
-            <br>
-            <p>Press any key to get started!</p>
-            <br>
-            <p>Wins: <span id="winCountDisplay"></span></p>
-            <br>
-            <p>Current Word</p>
-            <br>
-            <p><span id="workingWordDisplay"></span></p>
-            <br>
-            <p>Number of guesses remaining: <span id="guessCountDisplay"></span></p>
-            <br>
-            <p>Letters already guessed: <span id="badGuessDisplay"></span></p>
-          </div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="jumbotron text-center">
+                <h1>Star Wars Hangman</h1>
+                <p id="message">Press any key to get started!</p>
+            </div>
         </div>
-      </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div id="game-graphic" class="panel-body">
 
-            <!-- Link to the game javascript file -->
-            <script type="text/javascript" src="assets/javascript/game.js"></script>
-    </body>
+                </div>
+            </div>
+            <img src="" alt="">
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Current Word</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 id="game-word">_ _ _ _ _ _ </h3>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Letters Already Guessed: <span id="wrong-letters"></span>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Number of Guesses Remaining: <span id="guesses-left"></span>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Wins: <span id="win-count">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Link to the game javascript file -->
+ <script type="text/javascript" src="assets/javascript/game.js"></script>
+</body>
 
 </html>
