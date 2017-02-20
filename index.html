@@ -5,10 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>SW Hangman</title>
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -18,6 +15,8 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Style Overrides CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nova+Mono|Roboto+Mono:400,500,700" rel="stylesheet">
 
 </head>
 
@@ -27,42 +26,52 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="jumbotron text-center">
-                <h1>Star Wars Hangman</h1>
-                <p id="message">Press any key to get started!</p>
+                <img src="assets/images/swLogo.png" alt="">
+                <div id="message">Press any key to get started!</div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div id="game-graphic" class="panel-body">
-
-                </div>
+        <div class="col-sm-5">
+            <div class="panel text-center game-board">
+                <img src="" alt="" class="game-img" id="hangman-img">
             </div>
-            <img src="" alt="">
         </div>
-        <div class="col-sm-6">
-            <div class="panel panel-default">
+        <div class="col-sm-7">
+            <div class="panel panel-custom">
                 <div class="panel-heading">
-                    <h4>Current Word</h4>
+                    Current Word
                 </div>
-                <div class="panel-body">
-                    <h3 id="game-word">_ _ _ _ _ _ </h3>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    Letters Already Guessed: <span id="wrong-letters"></span>
+                <div class="panel-body text-center">
+                    <h3 id="game-word" class="focus-text"></h3>
                 </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    Number of Guesses Remaining: <span id="guesses-left"></span>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            Guesses Left:
+                            <div id="guesses-left" class="focus-text"></div>
+                        </div>
+                        <div class="col-xs-7">
+                            Missed Letters:
+                            <div id="wrong-letters" class="focus-text"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    Wins: <span id="win-count">0</span>
+                    <div class="row">
+                        <div class="col-xs-5">
+                            Wins:
+                            <div id="win-count" class="focus-text"></div>
+                        </div>
+                        <div class="col-xs-7">
+                            Losses:
+                            <div id="loss-count" class="focus-text"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,7 +79,9 @@
 </div>
 
 <!-- Link to the game javascript file -->
- <script type="text/javascript" src="assets/javascript/game.js"></script>
+<script type="text/javascript" src="assets/javascript/game.js"></script>
 </body>
 
 </html>
+
+

@@ -1,3 +1,65 @@
-#game-graphic {
-    height: 363px;
+/*FONTS
+----------------------------------------------------
+  font-family: 'Nova Mono', monospace;
+  font-family: 'Roboto Mono', monospace;
+*/
+
+body {
+    background-image: url("../images/bg-stars.gif");
+    background-color: #212830;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.jumbotron {
+    padding: 30px;
+    background: rgba(200, 54, 54, 0.0);
+    margin-bottom: 5px;
+}
+
+.jumbotron img {
+    width: 90%;
+}
+
+.game-board {
+    height: 348px;
+    padding: 15px;
+}
+
+.panel, .panel-custom {
+    background-color: rgba(15, 40, 50, 0.4);
+    border-color: rgba(38, 45, 55, 0.75);
+    color: rgba(90, 100, 130, 0.75);
+}
+
+.panel-heading {
+    background-color: rgba(90, 100, 130, 0.1);
+    color: rgba(90, 100, 130, 0.75);
+    border-color: rgba(38, 45, 55, 0.75);
+    font-family: 'Roboto Mono', monospace;
+}
+
+.panel-title {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.game-board img {
+    height: 100%;
+}
+
+.focus-text {
+    color: #829bbe;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+#game-word {
+    font-size: 4em;
+    /*color: rgba(156, 185, 229, 1);*/
+    color: #e0a204;
+}
+
+#message {
+    color: rgba(255, 140, 0, 0.75);
+    margin-top: 15px;
+
 }

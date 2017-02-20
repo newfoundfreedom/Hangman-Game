@@ -73,17 +73,22 @@ var hangmanGame = {  // OVERALL GAME OBJECT
             description: 'Yoda was a legendary Jedi Master and stronger than most in his connection with the Force. Small in size but wise and powerful, he trained Jedi for over 800 years, playing integral roles in the Clone Wars, the instruction of Luke Skywalker, and unlocking the path to immortality.',
         }
     },
+
     letterBank: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-    currentWord: "",
-    gameWord: [], // word to be displayed
-    wrongLetters: [], // create a blank array to capture missed letter guesses
-    guessesLeft: 10, // variable to set initial guesses allowed
-    winCount: 0, // total number of correctly guessed words
+    currentWord: "",      // randomly chosen word from answerBank
+    gameWord: [],         // word to be displayed
+    wrongLetters: [],     // create a blank array to capture missed letter guesses
+    guessesLeft: 10,      // variable to set initial guesses allowed
+    winCount: 0,          // total number of games won
+    lossCount: 0,         // total number of games lost
+
 
 // FUNCTIONS
 //---------------------------------------------------------------------------------
-    reset: function () {  // function to initialize a new game resetting all critical values
 
+    // RESET
+    //-------------------------------------------------------
+    reset: function () {  // function to initialize a new game resetting all critical values
         // reset game variables
         this.gameWord = [];
         this.guessesLeft = 10;
@@ -98,59 +103,90 @@ var hangmanGame = {  // OVERALL GAME OBJECT
         }
 
         // define display variables
-        $("#game-word").text(this.gameWord.join(" "));
-        $("#wrong-letters").text(this.wrongLetters);
-        $("#guesses-left").text(this.guessesLeft);
-        $("#win-count").text(this.winCount);
-        $("#message").text("Press any key to get started!");
+        document.getElementById('game-word').innerHTML = this.gameWord.join("");        // setup gameWord display
+        document.getElementById('wrong-letters').innerHTML = this.wrongLetters;         // setup wrongLetters display
+        document.getElementById('guesses-left').innerHTML = this.guessesLeft;           // setup guessesLeft disply
+        document.getElementById('win-count').innerHTML = this.winCount;                 // setup win counter display
+        document.getElementById('loss-count').innerHTML = this.lossCount;               // setup loss counter display
+        document.getElementById('message').innerHTML = "Press any key to get started!"; // setup start message
+        document.getElementById('hangman-img').src = 'assets/images/trooper-10.png';    // load the beginning hangman image
     }, // end reset function
 
-
-// evaluate user's guess
+    //EVAL
+    //-------------------------------------------------------
     eval: function (letterGuessed) {
-        if (this.letterBank.indexOf(letterGuessed) !== -1) {               // if character is in letterBank then its either invalid or has not been guessed before
-            if (this.currentWord.indexOf(letterGuessed) !== -1) {          // check to see if it's in currentWord - if so...
-                for (var i = 0; i < this.currentWord.length; i++) {        // iterate through the currentWord
-                    if (letterGuessed === this.currentWord[i]) {           // determine where position
-                        this.gameWord.splice(i, 1, letterGuessed); // update that position in gameWord with letterGuessed
-                        $("#game-word").text(this.gameWord.join(" "));     // update game-word display
+        if (this.letterBank.indexOf(letterGuessed) !== -1) {            // if character is in letterBank then its either invalid or has not been guessed before
+            if (this.currentWord.indexOf(letterGuessed) !== -1) {       // check to see if it's in currentWord - if so...
+                for (var i = 0; i < this.currentWord.length; i++) {     // iterate through the currentWord
+                    if (letterGuessed === this.currentWord[i]) {        // determine where position
+                        this.gameWord.splice(i, 1, letterGuessed);      // update that position in gameWord with letterGuessed
+                        document.getElementById('game-word').innerHTML = this.gameWord.join(""); // update game-word display
                     }
                 }
             } //end child if statement
-            else {                                                         // if letter was not in currentWord - then..
-                var position = this.letterBank.indexOf(letterGuessed);     // determine its position in letterBank
-                this.letterBank.splice(position, 1);               // remove it from letterBank
-                this.wrongLetters.push(letterGuessed);                     // adding it to the wrongLetters Array
-                this.guessesLeft--;                                        // decrement the number of guessesLeft
-                $("#wrong-letters").text(this.wrongLetters);               // update wrong-letters display
-                $("#guesses-left").text(this.guessesLeft);                 // update the guesses-left display
+            else {                                                                      // if letter was not in currentWord - then..
+                var position = this.letterBank.indexOf(letterGuessed);                  // determine its position in letterBank
+                this.letterBank.splice(position, 1);                                    // remove it from letterBank
+                this.wrongLetters.push(letterGuessed);                                  // adding it to the wrongLetters Array
+                this.guessesLeft--;                                                     // decrement the number of guessesLeft
+                document.getElementById('wrong-letters').innerHTML = this.wrongLetters; // update wrong-letters display
+                document.getElementById('guesses-left').innerHTML = this.guessesLeft;   // update the guesses-left display
+                this.gameBoardUpdater(this.guessesLeft);                                // update the hangman image
             } // end child else statement
         } // end parent if statement
     }, // end eval function
 
-
+    //VERIFY
+    //-------------------------------------------------------
     verify: function () {
-        if (this.currentWord === this.gameWord.join("") && this.guessesLeft >= 0) {
-            this.winCount++;
-            $("#message").html("<h3>YOU WON!!!</h3>");
-            this.playAgain();
+        if (this.currentWord === this.gameWord.join("") && this.guessesLeft > 0) {                   // if the word has been correctly guessed and there are more turns left
+            this.winCount++;                                                                         // bump the win counter up by 1
+            document.getElementById('message').innerHTML = '\"The FORCE will be with you always!\"'; // display congratulations
+            new Audio('assets/sound-clips/force.mp3').play();                                       // play congratulatory soundclip
+            this.playAgain();                                                                        // run the playAgain function
         }
-        else if (this.guessesLeft === 0) {
-            $("#message").html("YOU LOSE. <p>Click any letter to start a new game</p>")
-            this.playAgain();
+        else if (this.guessesLeft === 7) {                                                           // if the counter is down to 1
+            document.getElementById('message').innerHTML = '\"I got a bad feeling about this\"';         // display encouraging message
+            new Audio('assets/sound-clips/bad_feeling.wav').play();                                  // play encouraging soundclip
         }
-        else {
-            $("#message").html("Guess a letter.")
+        else if (this.guessesLeft === 5) {                                                           // if the counter is down to 1
+            document.getElementById('message').innerHTML = '\"Don\'t make me destroy you.\"';        // display encouraging message
+            new Audio('assets/sound-clips/make_destroy.mp3').play();                                  // play encouraging soundclip
         }
-    },
+        else if (this.guessesLeft === 2) {                                                           // if the counter is down to 1
+            document.getElementById('message').innerHTML = 'Use the FORCE Luke...';                  // display encouraging message
+            new Audio('assets/sound-clips/swforce2.wav').play();                                     // play encouraging soundclip
+        }
+        else if (this.guessesLeft === 0) {                                                               // if the user ran out of turns
+            this.lossCount++;                                                                            // increment the loss counter
+            document.getElementById('message').innerHTML = '\"You have failed me for the last time.\"';  // message ther user that they suck
+            new Audio('assets/sound-clips/for_the_last_time.wav').play();                                // play sucky soundclip
+            this.playAgain();                                                                            // run the playAgain function
+        }
+        else {                                                                            // if they have not guessed the word and the users still has turns
+            document.getElementById('message').innerHTML = 'Continue guessing letters.';  // message the user to keep guessing
+        }
+    },  //end the verify function
 
 
+    //PLAY AGAIN
+    //-------------------------------------------------------
     playAgain: function () {
         document.onkeyup = function (event) {
             hangmanGame.reset();
             hangmanGame.play();
         }
-    },
+    }, // end the playAgain function
+
+    //GAME BOARD UPDATE
+    //-------------------------------------------------------
+    gameBoardUpdater: function (guessesLeft) {  // updates the hangman image
+        for (var i = 0; i < 11; i++) {          // for each guess number between 1 & 10
+            if (guessesLeft === i) {            // find which number the user is on
+                document.getElementById('hangman-img').src = 'assets/images/trooper-' + i + '.png';  // and load the matching image number
+            }
+        }
+    }, // end the gameBoardUpdater
 
 
 // MAIN
