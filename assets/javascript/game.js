@@ -73,7 +73,13 @@ var hangmanGame = {  // OVERALL GAME OBJECT
             description: 'Yoda was a legendary Jedi Master and stronger than most in his connection with the Force. Small in size but wise and powerful, he trained Jedi for over 800 years, playing integral roles in the Clone Wars, the instruction of Luke Skywalker, and unlocking the path to immortality.',
         }
     },
-
+    soundBank: {
+        badFeeling: ['\"I got a bad feeling about this\"', 'assets/sound-clips/bad_feeling.wav'],
+        forceAlways: ['\"The FORCE will be with you always!\"', 'assets/sound-clips/force.mp3'],
+        makeDestroy: ['\"Don\'t make me destroy you.\"', 'assets/sound-clips/make_destroy.mp3'],
+        useForce: ['Use the FORCE Luke...', 'assets/sound-clips/swforce2.wav'],
+        failedLast: ['\"You have failed me for the last time.\"', 'assets/sound-clips/for_the_last_time.wav']
+    },
     letterBank: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     currentWord: "",      // randomly chosen word from answerBank
     gameWord: [],         // word to be displayed
@@ -124,14 +130,14 @@ var hangmanGame = {  // OVERALL GAME OBJECT
                     }
                 }
             } //end child if statement
-            else {                                                                      // if letter was not in currentWord - then..
-                var position = this.letterBank.indexOf(letterGuessed);                  // determine its position in letterBank
-                this.letterBank.splice(position, 1);                                    // remove it from letterBank
-                this.wrongLetters.push(letterGuessed);                                  // adding it to the wrongLetters Array
-                this.guessesLeft--;                                                     // decrement the number of guessesLeft
-                document.getElementById('wrong-letters').innerHTML = this.wrongLetters; // update wrong-letters display
-                document.getElementById('guesses-left').innerHTML = this.guessesLeft;   // update the guesses-left display
-                this.gameBoardUpdater(this.guessesLeft);                                // update the hangman image
+            else {                                                                        // if letter was not in currentWord - then..
+                var position = this.letterBank.indexOf(letterGuessed);                    // determine its position in letterBank
+                this.letterBank.splice(position, 1);                                      // remove it from letterBank
+                this.wrongLetters.push(letterGuessed);                                    // adding it to the wrongLetters Array
+                this.guessesLeft--;                                                       // decrement the number of guessesLeft
+                document.getElementById('wrong-letters').innerHTML = this.wrongLetters;   // update wrong-letters display
+                document.getElementById('guesses-left').innerHTML = this.guessesLeft;     // update the guesses-left display
+                this.gameBoardUpdater(this.guessesLeft);                                  // update the hangman image
             } // end child else statement
         } // end parent if statement
     }, // end eval function
@@ -139,29 +145,29 @@ var hangmanGame = {  // OVERALL GAME OBJECT
     //VERIFY
     //-------------------------------------------------------
     verify: function () {
-        if (this.currentWord === this.gameWord.join("") && this.guessesLeft > 0) {                   // if the word has been correctly guessed and there are more turns left
-            this.winCount++;                                                                         // bump the win counter up by 1
-            document.getElementById('message').innerHTML = '\"The FORCE will be with you always!\"'; // display congratulations
-            new Audio('assets/sound-clips/force.mp3').play();                                       // play congratulatory soundclip
-            this.playAgain();                                                                        // run the playAgain function
+        if (this.currentWord === this.gameWord.join("") && this.guessesLeft > 0) {        // if the word has been correctly guessed and there are more turns left
+            this.winCount++;                                                              // bump the win counter up by 1
+            document.getElementById('message').innerHTML = this.soundBank.forceAlways[0]; // display congratulations
+            new Audio(this.soundBank.forceAlways[1]).play();                              // play congratulatory soundclip
+            this.playAgain();                                                             // run the playAgain function
         }
-        else if (this.guessesLeft === 7) {                                                           // if the counter is down to 1
-            document.getElementById('message').innerHTML = '\"I got a bad feeling about this\"';         // display encouraging message
-            new Audio('assets/sound-clips/bad_feeling.wav').play();                                  // play encouraging soundclip
+        else if (this.guessesLeft === 7) {                                                // if the counter is down to 1
+            document.getElementById('message').innerHTML = this.soundBank.badFeeling[0];  // display encouraging message
+            new Audio(this.soundBank.badFeeling[1]).play();                               // play encouraging soundclip
         }
-        else if (this.guessesLeft === 5) {                                                           // if the counter is down to 1
-            document.getElementById('message').innerHTML = '\"Don\'t make me destroy you.\"';        // display encouraging message
-            new Audio('assets/sound-clips/make_destroy.mp3').play();                                  // play encouraging soundclip
+        else if (this.guessesLeft === 5) {                                                // if the counter is down to 1
+            document.getElementById('message').innerHTML = this.soundBank.makeDestroy[0]; // display encouraging message
+            new Audio(this.soundBank.makeDestroy[1]).play();                              // play encouraging soundclip
         }
-        else if (this.guessesLeft === 2) {                                                           // if the counter is down to 1
-            document.getElementById('message').innerHTML = 'Use the FORCE Luke...';                  // display encouraging message
-            new Audio('assets/sound-clips/swforce2.wav').play();                                     // play encouraging soundclip
+        else if (this.guessesLeft === 2) {                                                // if the counter is down to 1
+            document.getElementById('message').innerHTML = this.soundBank.useForce[0];    // display encouraging message
+            new Audio(this.soundBank.useForce[1]).play();                                 // play encouraging soundclip
         }
-        else if (this.guessesLeft === 0) {                                                               // if the user ran out of turns
-            this.lossCount++;                                                                            // increment the loss counter
-            document.getElementById('message').innerHTML = '\"You have failed me for the last time.\"';  // message ther user that they suck
-            new Audio('assets/sound-clips/for_the_last_time.wav').play();                                // play sucky soundclip
-            this.playAgain();                                                                            // run the playAgain function
+        else if (this.guessesLeft === 0) {                                                // if the user ran out of turns
+            this.lossCount++;                                                             // increment the loss counter
+            document.getElementById('message').innerHTML = this.soundBank.failedLast[0];  // message ther user that they suck
+            new Audio(this.soundBank.failedLast[1]).play();                               // play sucky soundclip
+            this.playAgain();                                                             // run the playAgain function
         }
         else {                                                                            // if they have not guessed the word and the users still has turns
             document.getElementById('message').innerHTML = 'Continue guessing letters.';  // message the user to keep guessing
